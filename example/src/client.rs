@@ -4,8 +4,8 @@ use monoio::{
     io::{AsyncReadRentExt, AsyncWriteRent, AsyncWriteRentExt},
     net::TcpStream,
 };
-use monoio_rustls::TlsConnector;
-use rustls::{Certificate, OwnedTrustAnchor, RootCertStore};
+use monoio_rustls_fork_shadow_tls::TlsConnector;
+use rustls_fork_shadow_tls::{Certificate, OwnedTrustAnchor, RootCertStore};
 use rustls_pemfile::certs;
 
 #[monoio::main]
@@ -21,7 +21,7 @@ async fn main() {
     root_store
         .add(&read_ca_certs())
         .expect("unable to trust self-signed CA");
-    let config = rustls::ClientConfig::builder()
+    let config = rustls_fork_shadow_tls::ClientConfig::builder()
         .with_safe_defaults()
         .with_root_certificates(root_store)
         .with_no_client_auth();
@@ -30,7 +30,7 @@ async fn main() {
     let stream = TcpStream::connect("127.0.0.1:50443").await.unwrap();
     println!("127.0.0.1:50443 connected");
 
-    let domain = rustls::ServerName::try_from("monoio.rs").unwrap();
+    let domain = rustls_fork_shadow_tls::ServerName::try_from("monoio.rs").unwrap();
     let mut stream = connector.connect(domain, stream).await.unwrap();
     println!("handshake success");
 

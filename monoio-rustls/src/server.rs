@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use monoio::io::{AsyncReadRent, AsyncWriteRent};
-use rustls::{ServerConfig, ServerConnection};
+use rustls_fork_shadow_tls::{ServerConfig, ServerConnection};
 
 use crate::{
     split::{ReadHalf, WriteHalf},

@@ -6,8 +6,8 @@ use monoio::{
     io::{AsyncReadRent, AsyncWriteRentExt},
     net::{TcpListener, TcpStream},
 };
-use monoio_rustls::TlsAcceptor;
-use rustls::{Certificate, PrivateKey, ServerConfig};
+use monoio_rustls_fork_shadow_tls::TlsAcceptor;
+use rustls_fork_shadow_tls::{Certificate, PrivateKey, ServerConfig};
 use rustls_pemfile::{certs, rsa_private_keys};
 
 #[monoio::main]

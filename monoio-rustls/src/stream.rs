@@ -11,7 +11,7 @@ use monoio::{
     io::{AsyncReadRent, AsyncWriteRent},
     BufResult,
 };
-use rustls::{ConnectionCommon, SideData};
+use rustls_fork_shadow_tls::{ConnectionCommon, SideData};
 
 use crate::split::{ReadHalf, WriteHalf};
 

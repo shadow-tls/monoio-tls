@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use monoio::io::{AsyncReadRent, AsyncWriteRent};
-use rustls::{ClientConfig, ClientConnection};
+use rustls_fork_shadow_tls::{ClientConfig, ClientConnection};
 
 use crate::{
     split::{ReadHalf, WriteHalf},
@@ -39,13 +39,29 @@ impl From<ClientConfig> for TlsConnector {
 impl TlsConnector {
     pub async fn connect<IO>(
         &self,
-        domain: rustls::ServerName,
+        domain: rustls_fork_shadow_tls::ServerName,
         stream: IO,
     ) -> Result<TlsStream<IO>, TlsError>
     where
         IO: AsyncReadRent + AsyncWriteRent,
     {
         let session = ClientConnection::new(self.inner.clone(), domain)?;
+        let mut stream = Stream::new(stream, session);
+        stream.handshake().await?;
+        Ok(stream)
+    }
+
+    pub async fn connect_with_session_id_generator<IO>(
+        &self,
+        domain: rustls_fork_shadow_tls::ServerName,
+        stream: IO,
+        generator: impl Fn(&[u8]) -> [u8; 32],
+    ) -> Result<TlsStream<IO>, TlsError>
+    where
+        IO: AsyncReadRent + AsyncWriteRent,
+    {
+        let session =
+            ClientConnection::new_with_session_id_generator(self.inner.clone(), domain, generator)?;
         let mut stream = Stream::new(stream, session);
         stream.handshake().await?;
         Ok(stream)
