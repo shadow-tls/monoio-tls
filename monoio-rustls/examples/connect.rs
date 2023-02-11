@@ -4,8 +4,8 @@ use monoio::{
     io::{AsyncReadRent, AsyncWriteRentExt},
     net::TcpStream,
 };
-use monoio_rustls::TlsConnector;
-use rustls::{OwnedTrustAnchor, RootCertStore};
+use monoio_rustls_fork_shadow_tls::TlsConnector;
+use rustls_fork_shadow_tls::{OwnedTrustAnchor, RootCertStore};
 
 #[monoio::main]
 async fn main() {
@@ -17,7 +17,7 @@ async fn main() {
             ta.name_constraints,
         )
     }));
-    let config = rustls::ClientConfig::builder()
+    let config = rustls_fork_shadow_tls::ClientConfig::builder()
         .with_safe_defaults()
         .with_root_certificates(root_store)
         .with_no_client_auth();
@@ -26,7 +26,7 @@ async fn main() {
     let stream = TcpStream::connect("rsproxy.cn:443").await.unwrap();
     println!("rsproxy.cn:443 connected");
 
-    let domain = rustls::ServerName::try_from("rsproxy.cn").unwrap();
+    let domain = rustls_fork_shadow_tls::ServerName::try_from("rsproxy.cn").unwrap();
     let mut stream = connector.connect(domain, stream).await.unwrap();
     println!("handshake success");
 
@@ -39,5 +39,5 @@ async fn main() {
     let (r, buf) = stream.read(buf).await;
     r.expect("unable to read http response");
     let resp = String::from_utf8(buf).unwrap();
-    println!("http response recv: \n\n{}", resp);
+    println!("http response recv: \n\n{resp}");
 }

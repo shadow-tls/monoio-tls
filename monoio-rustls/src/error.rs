@@ -7,7 +7,7 @@ pub enum TlsError {
     #[error("io error")]
     Io(#[from] std::io::Error),
     #[error("rustls error")]
-    Rustls(#[from] rustls::Error),
+    Rustls(#[from] rustls_fork_shadow_tls::Error),
 }
 
 impl From<TlsError> for io::Error {

@@ -1,5 +1,5 @@
 [workspace]
-members = ["monoio-rustls", "monoio-native-tls", "monoio-io-wrapper", "example"]
+members = ["monoio-rustls", "monoio-native-tls", "monoio-io-wrapper"]
 resolver = "2"
 
 [workspace.dependencies]

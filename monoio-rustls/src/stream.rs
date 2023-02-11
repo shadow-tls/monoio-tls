@@ -9,7 +9,7 @@ use monoio::{
     BufResult,
 };
 use monoio_io_wrapper::{ReadBuffer, WriteBuffer};
-use rustls::{ConnectionCommon, ServerConnection, SideData};
+use rustls_fork_shadow_tls::{ConnectionCommon, ServerConnection, SideData};
 
 #[derive(Debug)]
 pub struct Stream<IO, C> {

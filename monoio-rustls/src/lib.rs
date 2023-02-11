@@ -16,7 +16,7 @@ pub use server::{
 };
 
 /// A wrapper around an underlying raw stream which implements the TLS protocol.
-pub type TlsStream<IO> = stream::Stream<IO, rustls::Connection>;
+pub type TlsStream<IO> = stream::Stream<IO, rustls_fork_shadow_tls::Connection>;
 
 impl<IO> From<ClientTlsStream<IO>> for TlsStream<IO> {
     fn from(value: ClientTlsStream<IO>) -> Self {
