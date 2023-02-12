@@ -8,12 +8,12 @@ license = "MIT/Apache-2.0"
 name = "monoio-rustls-fork-shadow-tls"
 readme = "README.md"
 repository = "https://github.com/shadow-tls/monoio-tls"
-version = "0.0.7"
+version = "0.0.8-mod.2"
 
 [dependencies]
 bytes = {version = "1"}
 monoio = {version = "0.0.9", default-features = false}
-rustls-fork-shadow-tls = {version = "0.20", default-features = false}
+rustls-fork-shadow-tls = {version = "0.20.9-mod.2", default-features = false}
 thiserror = {version = "1"}
 
 [features]
